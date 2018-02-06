@@ -1,0 +1,51 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_384ed/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_384ed.dir/build.make CMakeFiles/cmTC_384ed.dir/build
+gmake[1]: Entering directory '/home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_384ed.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIC    -o CMakeFiles/cmTC_384ed.dir/CheckSymbolExists.c.o   -c /home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_384ed
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_384ed.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC     -rdynamic CMakeFiles/cmTC_384ed.dir/CheckSymbolExists.c.o  -o cmTC_384ed 
+CMakeFiles/cmTC_384ed.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_384ed.dir/build.make:98: cmTC_384ed] Error 1
+gmake[1]: Leaving directory '/home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:126: cmTC_384ed/fast] Error 2
+
+File /home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_e7cda/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_e7cda.dir/build.make CMakeFiles/cmTC_e7cda.dir/build
+gmake[1]: Entering directory '/home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e7cda.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -fPIC -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_e7cda.dir/CheckFunctionExists.c.o   -c /usr/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_e7cda
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e7cda.dir/link.txt --verbose=1
+/usr/bin/cc -fPIC -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_e7cda.dir/CheckFunctionExists.c.o  -o cmTC_e7cda -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_e7cda.dir/build.make:98: cmTC_e7cda] Error 1
+gmake[1]: Leaving directory '/home/jkraemer/Dev/san-cafe/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:126: cmTC_e7cda/fast] Error 2
+
+

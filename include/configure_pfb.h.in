@@ -1,0 +1,16 @@
+#ifndef CONFIGURE_PFB
+#define CONFIGURE_PFB
+#include <string>
+
+namespace pacs {
+  namespace cuda {
+
+    inline
+    const std::string& get_config_dir()
+    {
+      static  std::string tap_dir("@ARB_CONFIG_DIR@/");
+      return tap_dir;
+    };
+  }
+}
+#endif /* ifndef CONFIGURE_PFB */

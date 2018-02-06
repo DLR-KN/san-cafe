@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['getfailurelist',['getFailureList',['../classdlr__test__suite_1_1_test_result.html#ad2171499b096a11142a327d6d6fbe046',1,'dlr_test_suite::TestResult']]],
+  ['getmessage',['getMessage',['../classdlr__test__suite_1_1_test_exception.html#ae848f6deb645f75008b9cc12a424c322',1,'dlr_test_suite::TestException']]],
+  ['getname',['getName',['../classdlr__test__suite_1_1_test_base.html#a4cbc8f5c889b157380cc8e9019511152',1,'dlr_test_suite::TestBase::getName()'],['../classdlr__test__suite_1_1_test_executor.html#a10a70280ce6c9fea37cf16fd3f2a4b6f',1,'dlr_test_suite::TestExecutor::getName()'],['../classdlr__test__suite_1_1_test_obj.html#ad2dcea48e6a9cbe929f5585e3c1451d3',1,'dlr_test_suite::TestObj::getName()'],['../classdlr__test__suite_1_1_test_suite.html#a161c38082c70f1fea01a967c41997ee7',1,'dlr_test_suite::TestSuite::getName()']]],
+  ['gettestcount',['getTestCount',['../classdlr__test__suite_1_1_test_base.html#acd8e783119f127971c8d4a4d8411f1fb',1,'dlr_test_suite::TestBase::getTestCount()'],['../classdlr__test__suite_1_1_test_obj.html#a9f040e14b1f81a47ac797b581fe05b72',1,'dlr_test_suite::TestObj::getTestCount()'],['../classdlr__test__suite_1_1_test_runner.html#a4591c79da6e2a7d726a2f35a0a0bdf7c',1,'dlr_test_suite::TestRunner::getTestCount()'],['../classdlr__test__suite_1_1_test_suite.html#aa43560838e56717486b384bf1bb4f81e',1,'dlr_test_suite::TestSuite::getTestCount()']]]
+];

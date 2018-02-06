@@ -1,0 +1,10 @@
+<map id="dlr_test_suite::TestObj::run" name="dlr_test_suite::TestObj::run">
+<area shape="rect" id="node2" href="$classdlr__test__suite_1_1_test_result.html#a948069a155c00392a1f5adeb06d5425a" title="Outputs the progress of the currently running test and test run. " alt="" coords="232,5,403,47"/>
+<area shape="rect" id="node4" href="$classdlr__test__suite_1_1_test_obj.html#a7d400ebbefe36bc5b2a415e15b7e9c6c" title="Virtual run Test function. " alt="" coords="241,71,394,112"/>
+<area shape="rect" id="node5" href="$classdlr__test__suite_1_1_test_result.html#abb857d3484a0ef548516e78a3a58b8e8" title="Display that a test was performed successfully. " alt="" coords="232,136,403,177"/>
+<area shape="rect" id="node6" href="$classdlr__test__suite_1_1_test_result.html#a3f57546c546c530ff07c91f53f48b388" title="Add a Test to the failure List. " alt="" coords="232,201,403,243"/>
+<area shape="rect" id="node7" href="$classdlr__test__suite_1_1_test_result.html#ac5ee68b0755f468af68de1f54f05dfb6" title="Display that a test failed the assertions or thrown a dlr_test_suite::Exception. " alt="" coords="232,267,403,308"/>
+<area shape="rect" id="node8" href="$classdlr__test__suite_1_1_test_result.html#a81bfaded1b1f2bdc95f132219f705c8f" title="Display that a test was failed due to an unknown exception. " alt="" coords="232,332,403,373"/>
+<area shape="rect" id="node9" href="$classdlr__test__suite_1_1_test_result.html#a0d243a71ef26b190d42eecb33d227a4d" title="Lazy, just lazy. " alt="" coords="232,397,403,439"/>
+<area shape="rect" id="node3" href="$classdlr__test__suite_1_1_test_result.html#a2ce88f6d45ba4411ea3dab96488631a5" title="Show the progress of the current running test run. " alt="" coords="451,5,621,47"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="dlr_test_suite::TestRunner::showStatistic" name="dlr_test_suite::TestRunner::showStatistic">
+<area shape="rect" id="node2" href="$classdlr__test__suite_1_1_test_runner.html#a4591c79da6e2a7d726a2f35a0a0bdf7c" title="Gets the number of tests in this TestRunner. " alt="" coords="228,5,403,47"/>
+<area shape="rect" id="node4" href="$classdlr__test__suite_1_1_test_result.html#a8bf9dd232f0831731dc4bf64ebe99aaa" title="What functions. " alt="" coords="230,71,401,112"/>
+<area shape="rect" id="node5" href="$classdlr__test__suite_1_1_test_result.html#ad2171499b096a11142a327d6d6fbe046" title="Returns the vector with the failed tests. " alt="" coords="230,136,401,177"/>
+<area shape="rect" id="node3" href="$classdlr__test__suite_1_1_test_base.html#acd8e783119f127971c8d4a4d8411f1fb" title="Virtual function to get the number of tests stored in the child class. " alt="" coords="451,5,613,47"/>
+</map>
