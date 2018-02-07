@@ -4,4 +4,8 @@
 *.so
 *.exe
 
+#Build Directory
 build/
+
+#VIM .swp files
+*.swp
