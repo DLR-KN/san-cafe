@@ -34,6 +34,7 @@ typedef enum {
   DEV_COPY_ERR         //! Could not copy data from/to device
 
 } pacs_error_t;
+
 //
 /*!@struct pfb_cuda_config
  * @brief Struct that contains the configuration of the PFB CUDA Kernels

@@ -20,4 +20,4 @@ ADD_DEFINITIONS("-Wall -g -std=c++11")
 
 #add_custom_target(test_archs COMMAND test_archs DEPENDS test_archs)
 
-add_test(archs test_archs)
+add_test(arch test_arch)

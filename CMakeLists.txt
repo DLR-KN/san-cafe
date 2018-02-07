@@ -1,3 +1,5 @@
+enable_testing()
+
 set(CMAKE_CXX_FLAGS "-D_FORCE_INLINES ${CMAKE_CXX_FLAGS}")
 
 set(NVCC_FLAGS_EXTRA "${NVCC_FLAGS_EXTRA} -D_FORCE_INLINES")
@@ -24,6 +26,9 @@ list(APPEND cafe_host_lib_srcs
      ${CMAKE_CURRENT_SOURCE_DIR}/lib/pfb_arb_resampler.cc)
      # ${CMAKE_CURRENT_SOURCE_DIR}/lib/pfb_synthesizer.cc
 
+list(APPEND cafe_test_srcs
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/test_san_cafe.cc)
+
 include_directories(
                     ${CMAKE_CURRENT_SOURCE_DIR}/include/
                     ${CMAKE_CURRENT_BINARY_DIR}/include/
@@ -37,6 +42,11 @@ cuda_add_library(cafe_gpu SHARED ${cafe_gpu_lib_srcs})
 # Build the Host Library with C++14
 set(CMAKE_CXX_FLAGS "-O3 -Wall -g -std=c++14")
 cuda_add_library(cafe_host SHARED ${cafe_host_lib_srcs})
+
+# Add test executable and test target
+add_executable(test_san_cafe ${cafe_test_srcs})
+#add_custom_target(test_cafe COMMAND test_san_cafe DEPENDS test_san_cafe)
+add_test(test_cafe test_san_cafe)
 
 target_link_libraries(cafe_host
                       cafe_gpu)
