@@ -33,13 +33,13 @@ int cafe_init_cuda();
 
 /*!
  * @brief Callback function to allocate memory on the CUDA device
- * @param[in] size Size of memory to be allocated in bytes
+ * @param[in] size_t size Size of memory to be allocated in bytes
  */
 void malloc_cuda(size_t size);
 
 /*!
  * @brief Callback function to free memory on the CUDA device
- * @param[in] ptr Pointer to memory on the CUDA device
+ * @param[in] void* ptr Pointer to memory on the CUDA device
  */
 void free_cuda(void *ptr);
 
@@ -51,7 +51,7 @@ typedef std::unique_ptr<float2, void (*)(void *)> cuda_unique_ptr;
 
 /*!
  * @brief Factory function to create a unique ptr for memory on the CUDA device
- * @param[in] size Size of memory to be allocated in bytes
+ * @param[in] size_t size Size of memory to be allocated in bytes
  */
 cuda_unique_ptr create_cuda_unique_ptr(size_t size);
 } /* namespace cuda */
