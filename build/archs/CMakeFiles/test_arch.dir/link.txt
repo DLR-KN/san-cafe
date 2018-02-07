@@ -1,1 +1,0 @@
-/usr/bin/c++  -D_FORCE_INLINES   -rdynamic CMakeFiles/test_arch.dir/arch_detection.o CMakeFiles/test_arch.dir/test_archs.o  -o test_arch 

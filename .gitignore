@@ -1,0 +1,7 @@
+#Compiled Source
+#############################
+*.o
+*.so
+*.exe
+
+build/

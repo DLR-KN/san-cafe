@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -D_FORCE_INLINES   -shared -Wl,-soname,libpacs_archs.so -o libpacs_archs.so CMakeFiles/pacs_archs.dir/arch_detection.o CMakeFiles/pacs_archs.dir/archs.o 
