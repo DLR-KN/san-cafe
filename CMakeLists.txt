@@ -5,7 +5,6 @@ set(NVCC_FLAGS_EXTRA "${NVCC_FLAGS_EXTRA} -D_FORCE_INLINES")
 find_package(CUDA QUIET REQUIRED)
 
 add_subdirectory(archs)
-add_subdirectory(testing)
 
 # Pass options to NVCC
 set(

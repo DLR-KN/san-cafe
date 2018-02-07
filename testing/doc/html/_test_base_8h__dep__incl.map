@@ -1,7 +1,0 @@
-<map id="include/TestBase.h" name="include/TestBase.h">
-<area shape="rect" id="node2" href="$_test_obj_8h.html" title="include/TestObj.h" alt="" coords="29,80,152,107"/>
-<area shape="rect" id="node4" href="$_test_helper_macros_8h.html" title="include/TestHelperMacros.h" alt="" coords="106,229,289,256"/>
-<area shape="rect" id="node5" href="$_test_suite_8h.html" title="include/TestSuite.h" alt="" coords="235,80,368,107"/>
-<area shape="rect" id="node3" href="$_test_executor_8h.html" title="include/TestExecutor.h" alt="" coords="5,155,160,181"/>
-<area shape="rect" id="node6" href="$_test_runner_8h.html" title="include/TestRunner.h" alt="" coords="285,155,429,181"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="dlr_test_suite::TestBase::getTestCount" name="dlr_test_suite::TestBase::getTestCount">
-<area shape="rect" id="node2" href="$classdlr__test__suite_1_1_test_runner.html#a4591c79da6e2a7d726a2f35a0a0bdf7c" title="Gets the number of tests in this TestRunner. " alt="" coords="216,27,391,69"/>
-<area shape="rect" id="node5" href="$classdlr__test__suite_1_1_test_suite.html#aa43560838e56717486b384bf1bb4f81e" title="Returns the Number of tests in the TestSuite. " alt="" coords="222,93,385,134"/>
-<area shape="rect" id="node3" href="$classdlr__test__suite_1_1_test_runner.html#a07c9171546b0638a99b7dcf003ec5cb3" title="Runs the TestObjects/TestSuites. " alt="" coords="439,5,639,32"/>
-<area shape="rect" id="node4" href="$classdlr__test__suite_1_1_test_runner.html#abaaf82f1549c12beaf08f8120122f0d7" title="Shows the accumulated statistics. " alt="" coords="451,57,626,98"/>
-</map>

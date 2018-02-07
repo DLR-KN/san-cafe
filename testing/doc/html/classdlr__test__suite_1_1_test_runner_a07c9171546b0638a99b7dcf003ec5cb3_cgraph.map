@@ -1,6 +1,0 @@
-<map id="dlr_test_suite::TestRunner::run" name="dlr_test_suite::TestRunner::run">
-<area shape="rect" id="node2" href="$classdlr__test__suite_1_1_test_result.html#a1e8f920367d0d977ba6928b740c86e66" title="Start a new Test Setup. " alt="" coords="263,5,433,47"/>
-<area shape="rect" id="node3" href="$classdlr__test__suite_1_1_test_runner.html#a4591c79da6e2a7d726a2f35a0a0bdf7c" title="Gets the number of tests in this TestRunner. " alt="" coords="261,71,435,112"/>
-<area shape="rect" id="node5" href="$classdlr__test__suite_1_1_test_base.html#a773c443a0940aef11445c7f211a693d0" title="Virtual run function. " alt="" coords="253,137,443,163"/>
-<area shape="rect" id="node4" href="$classdlr__test__suite_1_1_test_base.html#acd8e783119f127971c8d4a4d8411f1fb" title="Virtual function to get the number of tests stored in the child class. " alt="" coords="491,71,653,112"/>
-</map>

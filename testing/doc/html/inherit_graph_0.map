@@ -1,6 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classdlr__test__suite_1_1_test_base.html" title="dlr_test_suite::TestBase" alt="" coords="5,38,168,65"/>
-<area shape="rect" id="node2" href="$classdlr__test__suite_1_1_test_obj.html" title="dlr_test_suite::TestObj" alt="" coords="221,13,374,39"/>
-<area shape="rect" id="node4" href="$classdlr__test__suite_1_1_test_suite.html" title="dlr_test_suite::TestSuite" alt="" coords="216,63,379,90"/>
-<area shape="rect" id="node3" href="$classdlr__test__suite_1_1_test_executor.html" title="dlr_test_suite::TestExecutor\l\&lt; type \&gt;" alt="" coords="427,5,612,47"/>
-</map>
