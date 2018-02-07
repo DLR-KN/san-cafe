@@ -15,14 +15,14 @@ pfb_channelizer_ccf::pfb_channelizer_factory(const std::vector<float> &taps,
 
 pfb_channelizer_ccf::pfb_channelizer_ccf(const std::vector<float> &taps,
                                          int channels, int oversampling)
-    : _num_channels(channels),
-      _oversampling(oversampling),
-      _num_thread_blocks(channels),
-      _samples_to_process(0),
-      _g_instream(nullptr, free),
-      _g_instreams(nullptr, free),
-      _fft_inbuffer(nullptr, free),
-      _fft_outbuffer(nullptr, free)
+: _num_channels(channels),
+  _oversampling(oversampling),
+  _num_thread_blocks(channels),
+  _samples_to_process(0),
+  _g_instream(nullptr, free),
+  _g_instreams(nullptr, free),
+  _fft_inbuffer(nullptr, free),
+  _fft_outbuffer(nullptr, free)
 {
   int err = 0;
   err = cafe::cafe_init_cuda();

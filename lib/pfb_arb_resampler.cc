@@ -21,11 +21,11 @@ pfb_arb_resampler::pfb_arb_resampler_factory(const std::vector<float> &taps,
 pfb_arb_resampler::pfb_arb_resampler(const std::vector<float> &taps,
                                      int num_filters, double resample_rate,
                                      int num_channels)
-    : _num_filters(num_filters),
-      _resample_rate(resample_rate),
-      _prot_taps(taps),
-      _num_channels(num_channels),
-      _history(nullptr, free)
+: _num_filters(num_filters),
+  _resample_rate(resample_rate),
+  _prot_taps(taps),
+  _num_channels(num_channels),
+  _history(nullptr, free)
 {
   _last_filter = (taps.size() / 2) % num_filters;
   set_filters();
@@ -78,8 +78,6 @@ void pfb_arb_resampler::set_diff_taps(const std::vector<float> &taps,
                                       std::vector<float> &difftaps)
 {
   std::vector<float> diff_coeffs{-1, 1};
-
- 
 
   // Make sure that the difftaps always have the right size
   // So we start with zero!

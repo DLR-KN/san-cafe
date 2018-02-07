@@ -22,6 +22,7 @@
 #include <cafe_cuda_helper.h>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 namespace cafe
 {
