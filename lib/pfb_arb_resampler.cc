@@ -279,8 +279,6 @@ int pfb_arb_resampler::filter(int num_insamples, float2 *input_buffer,
 {
   int num_out_samples = 0;
 
-  // std::cout << "Number of in samples " << num_insamples << std::endl;
-
   for (int i = 0; i < num_insamples;) {
     // Fire the kernel
     update_start_filter(&_last_filter);

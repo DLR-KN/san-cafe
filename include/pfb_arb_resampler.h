@@ -33,7 +33,6 @@ class pfb_arb_resampler
   int _int_rate;          //! Integer Decimation Rate
   double _delta;          //! Difference between _resample_rate and _int_rate
   double _resample_rate;  //! Actual Resample Rate
-  int _delta_samples;     //! Filter Skip
   int _last_filter;       //! Last filter used during filter execution
   double _accum;          //! Accumulated float filter skips
   double _flt_rate;       //! Actual Decimation Rate

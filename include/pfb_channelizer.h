@@ -39,10 +39,7 @@ class pfb_channelizer_ccf
   int _cuda_buffer_len;      //! Length of the output buffer
 
   // Grid variables
-  static const int _warp_size = 32;
-  enum {
-    _warp_size = 32
-  }                           //! Compile time constant Warp Size
+  enum { _warp_size = 32 };   //! Compile time constant Warp Size
   int _num_thread_blocks;     //! Number of blocks in grid
   int _threads_per_block;     //! Number of threads per block
   int _cuda_shared_mem_size;  //! Size of the cuda Shared memory
