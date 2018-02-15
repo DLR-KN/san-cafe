@@ -18,3 +18,20 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *
 ******************************************************************************/
+#ifndef QA_PFB_RESAMPLER_H
+#define QA_PFB_RESAMPLER_H
+#include <complex>
+#include <string>
+#include <vector>
+
+namespace pfb_resampler
+{
+const std::string test_dir("@CAFE_TEST_DIR@");
+
+void resize_input_vector(std::vector<std::complex<float>> &vec,
+                         unsigned int factor);
+
+int test_1();
+
+} /* namespace resampler */
+#endif /* QA_PFB_RESAMPLER_H */

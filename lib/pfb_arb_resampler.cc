@@ -27,6 +27,7 @@ pfb_arb_resampler::pfb_arb_resampler(const std::vector<float> &taps,
   _num_channels(num_channels),
   _history(nullptr, free)
 {
+
   _last_filter = (taps.size() / 2) % num_filters;
   set_filters();
   set_indexing(_resample_rate, num_filters);
@@ -70,7 +71,7 @@ void pfb_arb_resampler::set_taps(const std::vector<float> &prot_taps,
   }
 
   _num_taps_per_filter = (int)(len_poly_filter + 0.5);
-  std::cout << "We're having " << _num_taps_per_filter << " taps per filter\n";
+  //std::cout << "We're having " << _num_taps_per_filter << " taps per filter\n";
 }
 
 /*****************************************************************************/
@@ -187,7 +188,7 @@ void pfb_arb_resampler::set_constant_symbols()
 void pfb_arb_resampler::set_history()
 {
   _history.reset();
-  size_t size = _num_channels * (_num_taps_per_filter - 1);
+  size_t size = _num_filtes * (_num_taps_per_filter - 1);
   _history = cafe::create_cuda_unique_ptr(size * sizeof(float2));
   cudaMemset((void *)_history.get(), 0, size * sizeof(float2));
 }

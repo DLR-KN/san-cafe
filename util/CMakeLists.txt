@@ -7,5 +7,9 @@ list(APPEND util_srcs
   ${CMAKE_CURRENT_SOURCE_DIR}/writeSamples.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/readSamples.cc)
 
+include_directories(
+                    ${CMAKE_CURRENT_SOURCE_DIR}/include/cafe/
+)
+
 add_library(cafe_util SHARED ${util_srcs})
 

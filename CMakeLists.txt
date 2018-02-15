@@ -29,13 +29,23 @@ list(APPEND cafe_host_lib_srcs
      ${CMAKE_CURRENT_SOURCE_DIR}/lib/pfb_arb_resampler.cc)
      # ${CMAKE_CURRENT_SOURCE_DIR}/lib/pfb_synthesizer.cc
 
+SET(CAFE_TEST_DIR "${CMAKE_SOURCE_DIR}/testing/testfiles/")## Configure the Debug Transmitter Experiment
+configure_file (
+    "${CMAKE_CURRENT_SOURCE_DIR}/testing/include/cafe/testing/qa_pfb_resampler.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/testing/include/cafe/testing/qa_pfb_resampler.h"
+)
+
 list(APPEND cafe_test_srcs
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib/test_san_cafe.cc)
+    ${CMAKE_CURRENT_SOURCE_DIR}/testing/src/test_san_cafe.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/testing/src/qa_pfb_resampler.cc)
 
 include_directories(
                     ${CMAKE_CURRENT_SOURCE_DIR}/include/
                     ${CMAKE_CURRENT_BINARY_DIR}/include/
                     ${CMAKE_CURRENT_SOURCE_DIR}/archs/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/testing/include/cafe/
+                    ${CMAKE_BINARY_DIR}/testing/include/cafe/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/util/include/cafe/
 )
 
 # Build the GPU Device Library with c++98

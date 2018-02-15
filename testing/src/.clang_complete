@@ -1,0 +1,7 @@
+-std=c++14
+-I../../archs/
+-I/usr/local/cuda-9.0/include/
+-I../../include/
+-I../testing/include/cafe/
+-I../../util/include/cafe/
+-I../../build/testing/include/cafe/
