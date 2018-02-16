@@ -28,7 +28,7 @@ int set_last_sample(int *h_last_sample)
 int set_resampler_constants(double *h_delta, double *h_accum,
                             double *h_flt_rate, int *h_num_filters,
                             int *h_start_filter, int *h_num_taps, float *h_taps,
-                            float *h_diff_taps, int *h_num_samples)
+                            float *h_diff_taps)
 {
   int ret = 0;
 
@@ -52,9 +52,6 @@ int set_resampler_constants(double *h_delta, double *h_accum,
   if (ret) return ret;
 
   ret = cudaMemcpyToSymbol(num_taps, h_num_taps, sizeof(float));
-  if (ret) return ret;
-
-  ret = cudaMemcpyToSymbol(num_samples, h_num_samples, sizeof(float));
   if (ret) return ret;
 
   ret = cudaMemcpyToSymbol(diff_taps, h_diff_taps,
@@ -98,8 +95,8 @@ __global__ void arb_resampler_execute(float2 *in, float2 *out, float2 *history)
   __syncthreads();
 
   // Copy sample to shared memory
-  int samples_left = num_samples - num_threads;
-  if (operation < num_samples) {
+  int samples_left = last_sample - num_threads;
+  if (operation < last_sample) {
     delay_line[operation + num_taps - 1] =
         in[blockIdx.x * num_samples + operation];
   }
@@ -119,9 +116,9 @@ __global__ void arb_resampler_execute(float2 *in, float2 *out, float2 *history)
     result.y +=
         delay_line[num_taps - 1 + sample - i].y * taps[filter * num_taps + i];
     diff_result.x +=
-        delay_line[num_taps + sample - i].x * diff_taps[filter * num_taps + i];
+        delay_line[num_taps - 1 + sample - i].x * diff_taps[filter * num_taps + i];
     diff_result.y +=
-        delay_line[num_taps + sample - i].y * diff_taps[filter * num_taps + i];
+        delay_line[num_taps - 1 + sample - i].y * diff_taps[filter * num_taps + i];
   }
 
   // Copy stuff back to global memory

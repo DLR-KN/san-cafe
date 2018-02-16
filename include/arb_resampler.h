@@ -18,12 +18,11 @@ int set_last_sample(int *h_last_sample);
  * @param in float  *h_taps Pointer to the tap vector in Constant Memory
  * @param in float  *h_diff_taps Pointer to the differential tap vector in
  *                               Constant Memory
- * @param in int    *h_num_samples Width of the output buffer for each channel
  ***************************************************************************/
 int set_resampler_constants(double *h_delta, double *h_accum,
                             double *h_flt_rate, int *h_num_filters,
                             int *start_filter, int *h_num_taps, float *h_taps,
-                            float *h_diff_taps, int *h_num_samples);
+                            float *h_diff_taps);
 
 /*****************************************************************************/ /*!
  * @brief Updates the Startfilter on the Device

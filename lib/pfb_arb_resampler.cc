@@ -181,7 +181,7 @@ void pfb_arb_resampler::set_constant_symbols()
   int num_taps = _poly_taps.size() / _num_filters;
   int res = set_resampler_constants(
       &_delta, &_accum, &_flt_rate, &_num_filters, &_last_filter, &num_taps,
-      _poly_taps.data(), _diff_taps.data(), &_num_samples_kernel_out);
+      _poly_taps.data(), _diff_taps.data());
   if (res) std::cout << "Error: Could not copy constant symbols\n";
 }
 
@@ -261,14 +261,20 @@ int pfb_arb_resampler::set_filter_block_config(unsigned int block_size)
     _filter_block_config = dim3(x_dim, y_dim, 1);
 
     set_num_samples_gpu(block_size);
-    int last_sample = static_cast<int>(kernel_in);
-    if (set_last_sample(&last_sample)) {
-      std::cout << "Could not set last sample on gpu\n";
-    }
 
-    _shared_mem_size = (block_size + _num_taps_per_filter + 1) * sizeof(float2);
+    _shared_mem_size = (kernel_in + _num_taps_per_filter - 1) * sizeof(float2);
     _num_samples_kernel_in = kernel_in;
     ready = true;
+  }
+
+  int last_sample = static_cast<int>(kernel_in);
+  if (set_last_sample(&last_sample)) {
+    std::cout << "Could not set last sample on gpu\n";
+  }
+
+  int num_samples = static_cast<int>(block_size);
+  if(set_num_samples(&num_samples)) {
+    std::cout << "Could not set num_samples on gpu\n";
   }
 
   return 0;
