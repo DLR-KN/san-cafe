@@ -188,7 +188,7 @@ void pfb_arb_resampler::set_constant_symbols()
 void pfb_arb_resampler::set_history()
 {
   _history.reset();
-  size_t size = _num_filtes * (_num_taps_per_filter - 1);
+  size_t size = _num_channels * (_num_taps_per_filter - 1);
   _history = cafe::create_cuda_unique_ptr(size * sizeof(float2));
   cudaMemset((void *)_history.get(), 0, size * sizeof(float2));
 }

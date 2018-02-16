@@ -15,7 +15,7 @@ add_subdirectory(util)
 set(
     CUDA_NVCC_FLAGS
     ${CUDA_NVCC_FLAGS};
-    -O3 -gencode arch=compute_52,code=sm_52 -Xptxas -v -D_FORCE_INLINES)
+    -O3 -gencode=arch=compute_20,code=sm_21 -Xptxas -v -D_FORCE_INLINES)
 
 list(APPEND cafe_gpu_lib_srcs
      ${CMAKE_CURRENT_SOURCE_DIR}/lib/pfb.cu
