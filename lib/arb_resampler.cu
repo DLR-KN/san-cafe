@@ -1,6 +1,7 @@
 #define MAX_FILTER_SIZE 1024
 
 #include <iostream>
+#include "stdio.h"
 
 __constant__ float delta;
 __constant__ float accum;
@@ -10,8 +11,10 @@ __constant__ int start_filter;
 __constant__ int num_taps;
 __constant__ int num_samples;
 __constant__ int last_sample;
+__constant__ int channel_buffersize;
 __constant__ float taps[MAX_FILTER_SIZE];
 __constant__ float diff_taps[MAX_FILTER_SIZE];
+__device__ int global_in = 0;
 
 int set_num_samples(int *h_num_samples)
 {
@@ -27,7 +30,8 @@ int set_last_sample(int *h_last_sample)
 
 int set_resampler_constants(double *h_delta, double *h_accum,
                             double *h_flt_rate, int *h_num_filters,
-                            int *h_start_filter, int *h_num_taps, float *h_taps,
+                            int *h_start_filter, int *h_num_taps,
+                            int *h_channel_buffersize, float *h_taps,
                             float *h_diff_taps)
 {
   int ret = 0;
@@ -52,6 +56,10 @@ int set_resampler_constants(double *h_delta, double *h_accum,
   if (ret) return ret;
 
   ret = cudaMemcpyToSymbol(num_taps, h_num_taps, sizeof(float));
+  if (ret) return ret;
+
+  ret = cudaMemcpyToSymbol(channel_buffersize, h_channel_buffersize,
+                           sizeof(float));
   if (ret) return ret;
 
   ret = cudaMemcpyToSymbol(diff_taps, h_diff_taps,
@@ -83,7 +91,10 @@ __global__ void arb_resampler_execute(float2 *in, float2 *out, float2 *history)
 
   int filter = ((int)(operation * delta));
   filter = (filter + start_filter) % num_filters;
+  //Check if we have to skip a sample
+  int offset = start_filter < ((int) (delta - num_filters));
   int sample = ((int)(operation * delta) + start_filter) / num_filters;
+  sample += offset ;
   int num_threads = blockDim.x * blockDim.y;
   float acc = operation * flt_rate + accum;
   acc = fmodf(acc, 1.0);
@@ -115,22 +126,22 @@ __global__ void arb_resampler_execute(float2 *in, float2 *out, float2 *history)
         delay_line[num_taps - 1 + sample - i].x * taps[filter * num_taps + i];
     result.y +=
         delay_line[num_taps - 1 + sample - i].y * taps[filter * num_taps + i];
-    diff_result.x +=
-        delay_line[num_taps - 1 + sample - i].x * diff_taps[filter * num_taps + i];
-    diff_result.y +=
-        delay_line[num_taps - 1 + sample - i].y * diff_taps[filter * num_taps + i];
+    diff_result.x += delay_line[num_taps - 1 + sample - i].x *
+                     diff_taps[filter * num_taps + i];
+    diff_result.y += delay_line[num_taps - 1 + sample - i].y *
+                     diff_taps[filter * num_taps + i];
   }
 
-  // Copy stuff back to global memory
-  out[blockIdx.x * blockDim.x * blockDim.y + operation].x =
+  /*Copy stuff back to global memory*/
+  out[blockIdx.x * channel_buffersize + operation].x =
       result.x + diff_result.x * acc;
-  out[blockIdx.x * blockDim.x * blockDim.y + operation].y =
+  out[blockIdx.x * channel_buffersize + operation].y =
       result.y + diff_result.y * acc;
 
   // Copy the history back to global memory
   if (operation < num_taps - 1) {
     history[blockIdx.x * (num_taps - 1) + operation] =
-        delay_line[last_sample - num_taps + 1 + operation];
+        delay_line[last_sample + operation];
   }
 }
 

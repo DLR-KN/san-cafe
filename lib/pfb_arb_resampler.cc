@@ -6,6 +6,8 @@
 #include <cmath>
 #include <iostream>
 
+int global_counter = 0;
+
 namespace filter
 {
 pfb_arb_resampler::pfb_arb_resampler_sptr
@@ -27,11 +29,9 @@ pfb_arb_resampler::pfb_arb_resampler(const std::vector<float> &taps,
   _num_channels(num_channels),
   _history(nullptr, free)
 {
-
   _last_filter = (taps.size() / 2) % num_filters;
   set_filters();
   set_indexing(_resample_rate, num_filters);
-  set_grid();
   set_history();
 
   try {
@@ -53,12 +53,6 @@ void pfb_arb_resampler::set_taps(const std::vector<float> &prot_taps,
       std::ceil((float)len_prot_filter / num_filters);
   unsigned int len_prot_filter_pad = len_poly_filter * num_filters;
 
-  // std::cout << "Length of Protoptype Filter : " << len_prot_filter << "\n";
-  // std::cout << "Length of Protoptype Filter (padded) : " <<
-  // len_prot_filter_pad << "\n";
-  // std::cout << "Length of Polyphase Filter Component : " << len_poly_filter
-  // << "\n";
-
   std::vector<float> temp_taps = prot_taps;
 
   poly_taps.resize(len_prot_filter_pad, 0.0);
@@ -71,7 +65,6 @@ void pfb_arb_resampler::set_taps(const std::vector<float> &prot_taps,
   }
 
   _num_taps_per_filter = (int)(len_poly_filter + 0.5);
-  //std::cout << "We're having " << _num_taps_per_filter << " taps per filter\n";
 }
 
 /*****************************************************************************/
@@ -106,41 +99,6 @@ void pfb_arb_resampler::set_filters()
 }
 
 /*****************************************************************************/
-void pfb_arb_resampler::set_grid()
-{
-  switch (_num_channels) {
-    case 45:
-      _num_samples_kernel_out = 256;
-      _shared_mem_size = _num_samples_kernel_out + _num_taps_per_filter;
-      break;
-    case 30:
-      _num_samples_kernel_out = 256;
-      _shared_mem_size = _num_samples_kernel_out + _num_taps_per_filter;
-    default:
-      _num_samples_kernel_out = 256;
-      _shared_mem_size = _num_samples_kernel_out + _num_taps_per_filter;
-  }
-
-  _shared_mem_size *= sizeof(float2);
-
-  // dim3 grid_dim = dim3(_num_channels,1,1);
-  // set_grid(_num_samples_kernel_out, 1, grid_dim);
-  _cuda_buffer_len =
-      (int)std::ceil(_num_samples_kernel_out * _resample_rate) * _num_channels;
-
-  // std::cout << "Resample Rate " << _resample_rate << "\n";
-  // std::cout << "Cuda Buffer Len " << _cuda_buffer_len << "\n";
-}
-
-/*****************************************************************************/
-void pfb_arb_resampler::set_grid(int block_dimx, int block_dimy, dim3 grid_dim)
-{
-  _grid_config.rs_block_dimx = block_dimx;
-  _grid_config.rs_block_dimy = block_dimy;
-  _grid_config.rs_grid_dim = grid_dim;
-}
-
-/*****************************************************************************/
 void pfb_arb_resampler::set_indexing(double rate, int num_filters)
 {
   _int_rate = num_filters;
@@ -158,19 +116,26 @@ void pfb_arb_resampler::set_indexing(double rate, int num_filters)
 int pfb_arb_resampler::gen_index_plan(int len_inbuffer)
 {
   int predicted_ops = 0;
+  
+  len_inbuffer -= (_last_filter < (static_cast<int>(_delta-_num_filters)));
 
   // check at which filter we will end up after len_inbuffer samples
   double end_filter = len_inbuffer * _num_filters;
   // remove the accumulated offset
-  end_filter -= (_last_filter + _accum);
+  end_filter -= (_last_filter);
 
   // Caclulate the number of filtering operations to do that
   predicted_ops = (int)std::ceil(end_filter / _delta);
+  // std::cout << "Doing " << predicted_ops << " ops\n";
+
   _last_filter =
-      (int)fmodf((predicted_ops + 1) * _delta + _last_filter, _num_filters);
+      (int)fmodf((predicted_ops)*_delta + _last_filter, _num_filters);
+  // std::cout << "Last filter " << _last_filter << "\n\n";
 
   // Store the newly accumulated offet
   _accum = fmodf(predicted_ops * _flt_rate + _accum, 1.0);
+
+  global_counter += predicted_ops;
 
   return predicted_ops;
 }
@@ -179,9 +144,10 @@ int pfb_arb_resampler::gen_index_plan(int len_inbuffer)
 void pfb_arb_resampler::set_constant_symbols()
 {
   int num_taps = _poly_taps.size() / _num_filters;
+  int channel_buffersize = 8192;
   int res = set_resampler_constants(
       &_delta, &_accum, &_flt_rate, &_num_filters, &_last_filter, &num_taps,
-      _poly_taps.data(), _diff_taps.data());
+      &channel_buffersize, _poly_taps.data(), _diff_taps.data());
   if (res) std::cout << "Error: Could not copy constant symbols\n";
 }
 
@@ -227,9 +193,6 @@ int pfb_arb_resampler::set_filter_block_config(unsigned int block_size)
     unsigned int kernel_block = new_block;
     kernel_block =
         static_cast<unsigned int>(std::ceil(kernel_block / 32.0)) * 32;
-    std::cout << kernel_calls_p_block << " kernel calls on " << kernel_block
-              << " samples\n";
-
     if (kernel_block % 32) {
       std::cout << "Block Size must be multiple of 32\n";
       return -1;
@@ -251,19 +214,21 @@ int pfb_arb_resampler::set_filter_block_config(unsigned int block_size)
     }
 
     _num_samples_kernel_out = new_block;
+    _num_samples_kernel_in = kernel_in;
     std::cout << "Filter Block configured to \n";
     std::cout << "Num Blocks: " << _num_channels << std::endl;
     std::cout << "Block Dim X " << x_dim << std::endl;
     std::cout << "Block Dim Y " << y_dim << std::endl;
-    std::cout << "Kernel In Block " << kernel_in << std::endl;
+    std::cout << "Kernel In Block " << _num_samples_kernel_in << std::endl;
     std::cout << "Samples produced by kernel: " << _num_samples_kernel_out
               << std::endl;
     _filter_block_config = dim3(x_dim, y_dim, 1);
 
-    set_num_samples_gpu(block_size);
+    unsigned int max_samples_needed =
+        static_cast<int>(std::ceil(x_dim * y_dim / _resample_rate));
 
-    _shared_mem_size = (kernel_in + _num_taps_per_filter - 1) * sizeof(float2);
-    _num_samples_kernel_in = kernel_in;
+    _shared_mem_size =
+        (max_samples_needed + _num_taps_per_filter - 1) * sizeof(float2);
     ready = true;
   }
 
@@ -273,7 +238,7 @@ int pfb_arb_resampler::set_filter_block_config(unsigned int block_size)
   }
 
   int num_samples = static_cast<int>(block_size);
-  if(set_num_samples(&num_samples)) {
+  if (set_num_samples(&num_samples)) {
     std::cout << "Could not set num_samples on gpu\n";
   }
 

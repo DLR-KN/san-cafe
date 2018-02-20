@@ -21,7 +21,8 @@ int set_last_sample(int *h_last_sample);
  ***************************************************************************/
 int set_resampler_constants(double *h_delta, double *h_accum,
                             double *h_flt_rate, int *h_num_filters,
-                            int *start_filter, int *h_num_taps, float *h_taps,
+                            int *start_filter, int *h_num_taps,
+                            int *h_channel_buffersize, float *h_taps,
                             float *h_diff_taps);
 
 /*****************************************************************************/ /*!
